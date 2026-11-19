@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+.info-container{
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: space-between;
+
+}
+.app-container{
+  margin: 10px;
+}
+.budget{
+  display: flex;
+  justify-content: space-between;
+}
+.box{
+  width: 100%;
+}
+.cross-container{
+  display: flex;
+  gap: 10px;
+}
+.cross{
+  border: none;
+  background-color: white;
+}
+.search-expense{
+  width: 100%;
+}
+.add-expense{
+  display: flex;
+  gap: 30px;
+}
