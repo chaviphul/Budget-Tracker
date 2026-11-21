@@ -7,12 +7,18 @@ const initialState = {
     { id: 2, name: "transport", cost: 100 },
   ],
 };
-
 const appReducer = (state, action) => {
   if (action.type === "ADD_EXPENSE") {
     return {
       ...state,
       expensesList: [...state.expensesList, action.payload],
+    };
+  } else if (action.type === "DELETE_EXPENSE") {
+    return {
+      ...state,
+      expensesList: state.expensesList.filter(
+        (expense) => expense.id !== action.payload.id,
+      ),
     };
   }
   return state;
@@ -22,6 +28,7 @@ export const BudgetContext = createContext({
   budget: 0,
   expensesList: [],
   addExpense: () => {},
+  deleteExpense: () => {},
 });
 
 const AppContext = ({ children }) => {
@@ -31,9 +38,17 @@ const AppContext = ({ children }) => {
     dispatch({
       type: "ADD_EXPENSE",
       payload: {
-        id: Date.now(),
+        id: crypto.randomUUID(),
         name: expenseName,
-        cost: expenseCost,
+        cost: Number(expenseCost),
+      },
+    });
+  };
+  const deleteExpense = (expenseid) => {
+    dispatch({
+      type: "DELETE_EXPENSE",
+      payload: {
+        id: expenseid,
       },
     });
   };
@@ -43,6 +58,7 @@ const AppContext = ({ children }) => {
         budget: state.budget,
         expensesList: state.expensesList,
         addExpense: addExpense,
+        deleteExpense: deleteExpense,
       }}
     >
       {children}
