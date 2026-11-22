@@ -1,11 +1,12 @@
 import { createContext, useReducer } from "react";
 
 const initialState = {
-  budget: 1000,
+  budget: 2000,
   expensesList: [
     { id: 1, name: "Food", cost: 200 },
     { id: 2, name: "transport", cost: 100 },
   ],
+  searchTerm: "",
 };
 const appReducer = (state, action) => {
   if (action.type === "ADD_EXPENSE") {
@@ -20,6 +21,11 @@ const appReducer = (state, action) => {
         (expense) => expense.id !== action.payload.id,
       ),
     };
+  } else if (action.type === "SEARCH_EXPENSE") {
+    return {
+      ...state,
+      searchTerm: action.payload.name,
+    };
   }
   return state;
 };
@@ -27,8 +33,10 @@ const appReducer = (state, action) => {
 export const BudgetContext = createContext({
   budget: 0,
   expensesList: [],
+  searchTerm: "",
   addExpense: () => {},
   deleteExpense: () => {},
+  showSearch: () => {},
 });
 
 const AppContext = ({ children }) => {
@@ -52,13 +60,23 @@ const AppContext = ({ children }) => {
       },
     });
   };
+  const showSearch = (expenseName) => {
+    dispatch({
+      type: "SEARCH_EXPENSE",
+      payload: {
+        name: expenseName,
+      },
+    });
+  };
   return (
     <BudgetContext.Provider
       value={{
         budget: state.budget,
         expensesList: state.expensesList,
+        searchTerm: state.searchTerm,
         addExpense: addExpense,
         deleteExpense: deleteExpense,
+        showSearch: showSearch,
       }}
     >
       {children}
