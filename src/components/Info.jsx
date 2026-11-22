@@ -1,5 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { BudgetContext } from "../store/AppContext";
+import EditMode from "./EditMode";
+import ViewMode from "./ViewMode";
 
 const Info = () => {
   const { budget, expensesList } = useContext(BudgetContext);
@@ -10,14 +12,15 @@ const Info = () => {
 
   const remaining = budget - totalExpenses;
 
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <>
-      <div className=" budget alert alert-primary box">
-        <div>Budget: {budget}</div>
-        <button type="button" className="btn btn-primary">
-          Edit
-        </button>
-      </div>
+      {isEditing ? (
+        <EditMode setIsEditing={setIsEditing}></EditMode>
+      ) : (
+        <ViewMode setIsEditing={setIsEditing}></ViewMode>
+      )}
       {remaining < 0 ? (
         <div class="alert alert-danger box" role="alert">
           Overbudget: {Math.abs(remaining)}
@@ -25,7 +28,6 @@ const Info = () => {
       ) : (
         <div className="alert alert-success box">Remaining:{remaining}</div>
       )}
-
       <div className="spent alert alert-info box">
         Spent so far: {totalExpenses}
       </div>

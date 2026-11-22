@@ -23,6 +23,11 @@ const appReducer = (state, action) => {
       ...state,
       searchTerm: action.payload.name,
     };
+  } else if (action.type === "EDIT_BUDGET") {
+    return {
+      ...state,
+      budget: action.payload.budget,
+    };
   }
   return state;
 };
@@ -34,6 +39,7 @@ export const BudgetContext = createContext({
   addExpense: () => {},
   deleteExpense: () => {},
   showSearch: () => {},
+  editBudget: () => {},
 });
 
 const AppContext = ({ children }) => {
@@ -65,6 +71,15 @@ const AppContext = ({ children }) => {
       },
     });
   };
+
+  const editBudget = (newBudget) => {
+    dispatch({
+      type: "EDIT_BUDGET",
+      payload: {
+        budget: Number(newBudget),
+      },
+    });
+  };
   return (
     <BudgetContext.Provider
       value={{
@@ -74,6 +89,7 @@ const AppContext = ({ children }) => {
         addExpense: addExpense,
         deleteExpense: deleteExpense,
         showSearch: showSearch,
+        editBudget: editBudget,
       }}
     >
       {children}
