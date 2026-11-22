@@ -22,7 +22,7 @@ const Info = () => {
         <ViewMode setIsEditing={setIsEditing}></ViewMode>
       )}
       {remaining < 0 ? (
-        <div class="alert alert-danger box" role="alert">
+        <div className="alert alert-danger box" role="alert">
           Overbudget: {Math.abs(remaining)}
         </div>
       ) : (
