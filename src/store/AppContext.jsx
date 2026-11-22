@@ -2,10 +2,7 @@ import { createContext, useReducer } from "react";
 
 const initialState = {
   budget: 2000,
-  expensesList: [
-    { id: 1, name: "Food", cost: 200 },
-    { id: 2, name: "transport", cost: 100 },
-  ],
+  expensesList: [],
   searchTerm: "",
 };
 const appReducer = (state, action) => {

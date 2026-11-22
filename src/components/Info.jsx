@@ -18,10 +18,14 @@ const Info = () => {
           Edit
         </button>
       </div>
-      <div className="remaining alert alert-success box">
-        {" "}
-        Remaining:{remaining}
-      </div>
+      {remaining < 0 ? (
+        <div class="alert alert-danger box" role="alert">
+          Overbudget: {Math.abs(remaining)}
+        </div>
+      ) : (
+        <div className="alert alert-success box">Remaining:{remaining}</div>
+      )}
+
       <div className="spent alert alert-info box">
         Spent so far: {totalExpenses}
       </div>

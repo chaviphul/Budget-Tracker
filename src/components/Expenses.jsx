@@ -1,6 +1,7 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import List from "./List";
 import { BudgetContext } from "../store/AppContext";
+import NoExpense from "./NoExpense";
 
 const Expenses = () => {
   const { expensesList, showSearch, searchTerm } = useContext(BudgetContext);
@@ -18,11 +19,15 @@ const Expenses = () => {
           onChange={(e) => showSearch(e.target.value)}
         />
       </div>
-      <ul className="list-group">
-        {filteredExpenses.map((expense) => (
-          <List key={expense.id} expense={expense}></List>
-        ))}
-      </ul>
+      {filteredExpenses.length === 0 ? (
+        <NoExpense></NoExpense>
+      ) : (
+        <ul className="list-group">
+          {filteredExpenses.map((expense) => (
+            <List key={expense.id} expense={expense}></List>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
